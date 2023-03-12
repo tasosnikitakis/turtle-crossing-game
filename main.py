@@ -19,6 +19,11 @@ screen.listen()
 screen.onkey(player.move_up, "Up")
 
 
+#Scoreboard
+score_board = Scoreboard()
+game_over = Scoreboard
+score_board.update_scoreboard()
+
 game_is_on = True
 while game_is_on:
     time.sleep(0.1)
@@ -32,13 +37,15 @@ while game_is_on:
     # car collision detection code
     for car in car_manager.all_cars:
         if player.distance(car) < 20:
+            game_over.game_over()
             game_is_on = False
 
     # successful passing detection code
     if player.is_at_finish_line():
         player.go_to_start()
+        score_board.level += 1
+        score_board.update_scoreboard()
         car_manager.increase_car_speed()
-
 
 
 screen.exitonclick()
