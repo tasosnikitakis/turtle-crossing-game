@@ -23,10 +23,25 @@ game_is_on = True
 while game_is_on:
     time.sleep(0.1)
     screen.update()
+
+    # random car generation code
     car_manager.random_car_creation()
     car_manager.move_cars()
 
 
+    # car collision detection code
+    for car in car_manager.all_cars:
+        if player.distance(car) < 20:
+            game_is_on = False
+
+    # successful passing detection code
+    if player.is_at_finish_line():
+        player.go_to_start()
+        car_manager.increase_car_speed()
+
+
+
+screen.exitonclick()
 
 
 
